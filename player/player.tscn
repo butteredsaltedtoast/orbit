@@ -4,10 +4,13 @@
 [ext_resource type="Script" uid="uid://gvvlfh2o77q" path="res://player/player.gd" id="1_rkbax"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_38vvf"]
-radius = 16.0
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o33cc"]
+radius = 12.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1696184416 groups=["player"]]
-collision_mask = 2
+collision_mask = 0
 script = ExtResource("1_rkbax")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1409940819]
@@ -20,3 +23,17 @@ shape = SubResource("CircleShape2D_38vvf")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=273139101]
 process_callback = 0
 position_smoothing_enabled = true
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1158686786]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1931629841]
+shape = SubResource("CircleShape2D_o33cc")
+
+[node name="InvincibleTimer" type="Timer" parent="." unique_id=1074888919]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="timeout" from="InvincibleTimer" to="." method="_on_invincible_timer_timeout"]
