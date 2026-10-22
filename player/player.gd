@@ -1,13 +1,16 @@
 class_name Player
 extends CharacterBody2D
 
-@export var max_speed: float = 250.0
-@export var acceleration: float = 2500.0
-@export var friction: float = 3500.0
+@export var max_speed: float = 125.0
+@export var acceleration: float = 1250.0
+@export var friction: float = 1750.0
 @export var max_hp: float = 100.0
 @onready var inv_timer: Timer = $InvincibleTimer
 @onready var hurtbox: Area2D = $Hurtbox
+@onready var sprite: Sprite2D = $Sprite2D
+
 var current_hp: float
+var tween: Tween
 
 func _ready() -> void:
 	GameState.player = self
@@ -36,6 +39,17 @@ func take_damage(damage: float) -> void:
 	else:
 		print("hp: ", current_hp)
 		inv_timer.start()
+		if tween.is_valid():
+			tween.kill()
+			sprite.modulate = Color.WHITE
+		tween = create_tween()
+		tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
+		tween.tween_interval(inv_timer.wait_time / 3)
+		tween.tween_property(sprite, "modulate", Color.WHITE, 0)
+		tween.tween_interval(inv_timer.wait_time / 3)
+		tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
+		tween.tween_interval(inv_timer.wait_time / 3)
+		tween.tween_property(sprite, "modulate", Color.WHITE, 0)
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body is Enemy:

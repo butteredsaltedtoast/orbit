@@ -1,7 +1,7 @@
 class_name Enemy
 extends CharacterBody2D
 
-@export var speed: float = 125.0
+@export var speed: float = 80.0
 
 func _physics_process(_delta: float) -> void:
 	var direction: Vector2 = Vector2.ZERO
