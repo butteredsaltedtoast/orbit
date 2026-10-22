@@ -39,7 +39,7 @@ func take_damage(damage: float) -> void:
 	else:
 		print("hp: ", current_hp)
 		inv_timer.start()
-		if tween.is_valid():
+		if tween and tween.is_valid():
 			tween.kill()
 			sprite.modulate = Color.WHITE
 		tween = create_tween()

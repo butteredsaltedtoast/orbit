@@ -9,3 +9,30 @@
 
 [node name="Enemy" parent="." unique_id=1015853766 instance=ExtResource("2_wdj6m")]
 position = Vector2(-138, -3)
+
+[node name="Enemy2" parent="." unique_id=1208143266 instance=ExtResource("2_wdj6m")]
+position = Vector2(-119, 132)
+
+[node name="Enemy3" parent="." unique_id=847584130 instance=ExtResource("2_wdj6m")]
+position = Vector2(-26, 136)
+
+[node name="Enemy4" parent="." unique_id=1648674494 instance=ExtResource("2_wdj6m")]
+position = Vector2(-194, 220)
+
+[node name="Enemy5" parent="." unique_id=740641745 instance=ExtResource("2_wdj6m")]
+position = Vector2(179, 208)
+
+[node name="Enemy6" parent="." unique_id=1817131013 instance=ExtResource("2_wdj6m")]
+position = Vector2(-30, 243)
+
+[node name="Enemy7" parent="." unique_id=2141013128 instance=ExtResource("2_wdj6m")]
+position = Vector2(233, 134)
+
+[node name="Enemy8" parent="." unique_id=285731072 instance=ExtResource("2_wdj6m")]
+position = Vector2(81, 273)
+
+[node name="Enemy9" parent="." unique_id=733137406 instance=ExtResource("2_wdj6m")]
+position = Vector2(-160, 414)
+
+[node name="Enemy10" parent="." unique_id=114774878 instance=ExtResource("2_wdj6m")]
+position = Vector2(165, 394)
