@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://gvvlfh2o77q" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="Script" uid="uid://d4anvkebtinof" path="res://player/orbit.gd" id="3_g1dw6"]
 [ext_resource type="Script" uid="uid://xdme1ig8umi5" path="res://player/camera.gd" id="3_yw30f"]
+[ext_resource type="PackedScene" uid="uid://dej0pg2s5at33" path="res://player/hook.tscn" id="5_qjkh3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_38vvf"]
 radius = 13.0
@@ -43,6 +44,7 @@ one_shot = true
 
 [node name="Orbit" type="Node2D" parent="." unique_id=1875542627]
 script = ExtResource("3_g1dw6")
+hook_scene = ExtResource("5_qjkh3")
 
 [node name="DebugGrabZone" type="Area2D" parent="Orbit" unique_id=345317877]
 collision_layer = 0

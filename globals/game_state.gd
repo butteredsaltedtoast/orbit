@@ -1,6 +1,7 @@
 extends Node
 
 var player: Player = null
+var wave: int = 0
 
 func hitstop(duration: float) -> void:
 	Engine.time_scale = 0

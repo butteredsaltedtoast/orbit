@@ -1,38 +1,16 @@
 [gd_scene format=3 uid="uid://biriwn23m61yg"]
 
 [ext_resource type="PackedScene" uid="uid://cpr5t4paix2ua" path="res://player/player.tscn" id="1_2262g"]
-[ext_resource type="PackedScene" uid="uid://c0hm73mfrcvb6" path="res://enemies/enemy.tscn" id="2_wdj6m"]
+[ext_resource type="Script" uid="uid://dskmiije68yf" path="res://levels/wave_manager.gd" id="2_wdj6m"]
+[ext_resource type="PackedScene" uid="uid://c0hm73mfrcvb6" path="res://enemies/enemy.tscn" id="3_l8qe7"]
 
 [node name="Main" type="Node2D" unique_id=440888473]
 
 [node name="Player" parent="." unique_id=1696184416 instance=ExtResource("1_2262g")]
 
-[node name="Enemy" parent="." unique_id=1015853766 instance=ExtResource("2_wdj6m")]
-position = Vector2(-138, -3)
+[node name="Enemies" type="Node2D" parent="." unique_id=1934073654]
 
-[node name="Enemy2" parent="." unique_id=1208143266 instance=ExtResource("2_wdj6m")]
-position = Vector2(-119, 132)
-
-[node name="Enemy3" parent="." unique_id=847584130 instance=ExtResource("2_wdj6m")]
-position = Vector2(-26, 136)
-
-[node name="Enemy4" parent="." unique_id=1648674494 instance=ExtResource("2_wdj6m")]
-position = Vector2(-194, 220)
-
-[node name="Enemy5" parent="." unique_id=740641745 instance=ExtResource("2_wdj6m")]
-position = Vector2(179, 208)
-
-[node name="Enemy6" parent="." unique_id=1817131013 instance=ExtResource("2_wdj6m")]
-position = Vector2(-30, 243)
-
-[node name="Enemy7" parent="." unique_id=2141013128 instance=ExtResource("2_wdj6m")]
-position = Vector2(233, 134)
-
-[node name="Enemy8" parent="." unique_id=285731072 instance=ExtResource("2_wdj6m")]
-position = Vector2(81, 273)
-
-[node name="Enemy9" parent="." unique_id=733137406 instance=ExtResource("2_wdj6m")]
-position = Vector2(-160, 414)
-
-[node name="Enemy10" parent="." unique_id=114774878 instance=ExtResource("2_wdj6m")]
-position = Vector2(165, 394)
+[node name="WaveManager" type="Node" parent="." unique_id=172018946 node_paths=PackedStringArray("enemies")]
+script = ExtResource("2_wdj6m")
+enemy_scene = ExtResource("3_l8qe7")
+enemies = NodePath("../Enemies")
