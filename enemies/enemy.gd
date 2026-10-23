@@ -22,6 +22,8 @@ func _physics_process(delta: float) -> void:
 			for i in range(get_slide_collision_count()):
 				var coll: Object = get_slide_collision(i).get_collider()
 				if coll is Enemy:
+					GameState.hitstop(0.05)
+					GameState.add_shake(0.4)
 					coll.queue_free()
 					queue_free()
 					return

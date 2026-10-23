@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dr32pshn8sbkr" path="res://icon.svg" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://gvvlfh2o77q" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="Script" uid="uid://d4anvkebtinof" path="res://player/orbit.gd" id="3_g1dw6"]
+[ext_resource type="Script" uid="uid://xdme1ig8umi5" path="res://player/camera.gd" id="3_yw30f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_38vvf"]
 radius = 13.0
@@ -27,6 +28,7 @@ shape = SubResource("CircleShape2D_38vvf")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=273139101]
 process_callback = 0
 position_smoothing_enabled = true
+script = ExtResource("3_yw30f")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1158686786]
 collision_layer = 0

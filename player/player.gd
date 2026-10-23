@@ -5,9 +5,11 @@ extends CharacterBody2D
 @export var acceleration: float = 1250.0
 @export var friction: float = 1750.0
 @export var max_hp: float = 100.0
+
 @onready var inv_timer: Timer = $InvincibleTimer
 @onready var hurtbox: Area2D = $Hurtbox
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var cam: CustomCam = $Camera2D
 
 var current_hp: float
 var tween: Tween
