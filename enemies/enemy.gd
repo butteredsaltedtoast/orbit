@@ -2,6 +2,7 @@ class_name Enemy
 extends CharacterBody2D
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var orbit_hitbox: Area2D = $OrbitHitbox
 
 @export var speed: float = 80.0
 @export var fling_speed: float = 550.0
@@ -10,16 +11,23 @@ extends CharacterBody2D
 @export var max_hp: float = 3.0
 @export var fling_damage: float = 3.0
 @export var kb_decay: float = 600.0
+@export var orbit_damage: float = 1.0
+@export var orbit_kb: float = 200.0
+@export var orbit_hits: int = 3
 
 enum State {CHASING, ORBITING, FLUNG}
 var state: State = State.CHASING
 var hp: float
+var hits_left: int
 var kb: Vector2 = Vector2.ZERO
 var hurt_timer: float = 0.0
 var tween: Tween
+var orig: Color
 
 func _ready() -> void:
 	hp = max_hp
+	hits_left = orbit_hits
+	orig = sprite.modulate
 
 func _physics_process(delta: float) -> void:
 	hurt_timer = move_toward(hurt_timer, 0, delta)
@@ -55,26 +63,41 @@ func capture() -> void:
 	set_collision_layer_value(2, false)
 	set_collision_mask_value(2, false)
 	velocity = Vector2.ZERO
+	orbit_hitbox.set_deferred("monitoring", true)
 
 func fling(direction: Vector2) -> void:
 	state = State.FLUNG
 	velocity = direction * fling_speed
 	set_collision_layer_value(3, true)
 	set_collision_mask_value(2, true)
+	orbit_hitbox.set_deferred("monitoring", false)
 	
-func take_damage(amt: float, push: Vector2) -> void:
+func take_damage(amt: float, push: Vector2) -> bool:
 	if hurt_timer > 0:
-		return
+		return false
 	hp -= amt
 	kb = push
 	hurt_timer = 0.15
 	tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
 	tween.tween_interval(hurt_timer / 3)
-	tween.tween_property(sprite, "modulate", Color.WHITE, 0)
+	tween.tween_property(sprite, "modulate", orig, 0)
 	tween.tween_interval(hurt_timer / 3)
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
 	tween.tween_interval(hurt_timer / 3)
-	tween.tween_property(sprite, "modulate", Color.WHITE, 0)
+	tween.tween_property(sprite, "modulate", orig, 0)
 	if hp <= 0:
+		queue_free()
+	return true
+
+func _on_orbit_hitbox_body_entered(body: Node2D) -> void:
+	if state != State.ORBITING or body is not Enemy or body == self or not is_instance_valid(GameState.player):
+		return
+	var push: Vector2 = GameState.player.global_position.direction_to(body.global_position) * orbit_kb
+	var hit: bool = body.take_damage(orbit_damage, push)
+	if not hit:
+		return
+	GameState.add_shake(0.15)
+	hits_left -= 1
+	if hits_left <= 0:
 		queue_free()
