@@ -6,6 +6,8 @@ enum State {FLYING, RETRACTING}
 signal latched(enemy: Enemy)
 signal returned
 
+@onready var hook: Line2D = $Line2D
+
 @export var speed: float = 500.0
 @export var return_speed: float = 700.0
 @export var max_range: float = 120.0
@@ -13,6 +15,12 @@ signal returned
 var state: State
 var direction: Vector2
 var distance_travelled: float
+
+func _process(delta: float) -> void:
+	if not is_instance_valid(GameState.player):
+		return
+	var v: Vector2 = hook.to_local(GameState.player.global_position)
+	hook.set_point_position(1, v)
 
 func _physics_process(delta: float) -> void:
 	if state == State.FLYING:

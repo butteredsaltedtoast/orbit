@@ -11,6 +11,11 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_572xl")
 
+[node name="Line2D" type="Line2D" parent="." unique_id=828850599]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 2.0
+default_color = Color(0.12941177, 1, 1, 1)
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1706868968]
 scale = Vector2(0.046875, 0.049107153)
 texture = ExtResource("1_qv24e")
