@@ -9,6 +9,7 @@
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_7frlh")
+fling_damage = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1206697953]
 modulate = Color(1, 0, 0, 1)
