@@ -12,9 +12,6 @@ radius = 6.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_o33cc"]
 radius = 5.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ddfx8"]
-radius = 40.0
-
 [node name="Player" type="CharacterBody2D" unique_id=1696184416 groups=["player"]]
 collision_mask = 0
 script = ExtResource("1_rkbax")
@@ -44,13 +41,6 @@ one_shot = true
 [node name="Orbit" type="Node2D" parent="." unique_id=1875542627]
 script = ExtResource("3_g1dw6")
 hook_scene = ExtResource("5_qjkh3")
-
-[node name="DebugGrabZone" type="Area2D" parent="Orbit" unique_id=345317877]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Orbit/DebugGrabZone" unique_id=1841206219]
-shape = SubResource("CircleShape2D_ddfx8")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="timeout" from="InvincibleTimer" to="." method="_on_invincible_timer_timeout"]

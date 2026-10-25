@@ -8,8 +8,6 @@ extends Node2D
 @export var hook_cooldown: float = 0.35
 @export var fling_cooldown: float = 0.15
 
-@onready var zone: Area2D = $DebugGrabZone
-
 var captured: Array[Enemy] = []
 var base_angle: float = 0.0
 var hook_out: bool = false
@@ -18,15 +16,6 @@ var fling_timer: float = 0.0
 
 func _physics_process(delta: float) -> void:
 	var aim_dir: Vector2 = global_position.direction_to(get_global_mouse_position())
-	#if Input.is_action_just_pressed("debug_grab") and captured.size() < max_slots:
-		#var nearest: Enemy = null
-		#for x in zone.get_overlapping_bodies():
-			#if x is Enemy:
-				#if nearest == null or x.global_position.distance_squared_to(global_position) < nearest.global_position.distance_squared_to(global_position):
-					#nearest = x
-		#if nearest != null:
-			#captured.append(nearest)
-			#nearest.capture()
 	hook_timer = move_toward(hook_timer, 0, delta)
 	fling_timer = move_toward(fling_timer, 0, delta)
 	if Input.is_action_just_pressed("hook"):

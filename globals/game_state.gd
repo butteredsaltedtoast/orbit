@@ -1,7 +1,7 @@
 extends Node
 
-signal hp_changed(curr, max)
-signal wave_changed(wv)
+signal hp_changed(curr: float, mx: float)
+signal wave_changed(wv: int)
 
 var player: Player = null
 var wave: int = 0

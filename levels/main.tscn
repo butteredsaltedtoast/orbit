@@ -25,4 +25,5 @@ script = ExtResource("2_wdj6m")
 enemy_scene = ExtResource("3_l8qe7")
 enemies = NodePath("../Enemies")
 
-[node name="Hud" parent="." unique_id=730284070 instance=ExtResource("5_ifaiv")]
+[node name="Hud" parent="." unique_id=730284070 node_paths=PackedStringArray("wave_manager") instance=ExtResource("5_ifaiv")]
+wave_manager = NodePath("../WaveManager")

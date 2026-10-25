@@ -13,6 +13,7 @@ extends CharacterBody2D
 
 var current_hp: float
 var tween: Tween
+var dead: bool = false
 
 func _ready() -> void:
 	GameState.player = self
@@ -32,11 +33,14 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func take_damage(damage: float) -> void:
-	if(!inv_timer.is_stopped()):
+	if(!inv_timer.is_stopped()) or dead:
 		return
+	current_hp = max(current_hp - damage, 0)
+	GameState.hp_changed.emit(current_hp, max_hp)
 	if(current_hp <= 0):
-		current_hp = 0
 		print("dead")
+		dead = true
+		return
 	else:
 		print("hp: ", current_hp)
 		inv_timer.start()
@@ -51,8 +55,6 @@ func take_damage(damage: float) -> void:
 		tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
 		tween.tween_interval(inv_timer.wait_time / 3)
 		tween.tween_property(sprite, "modulate", Color.WHITE, 0)
-		current_hp -= damage
-	GameState.hp_changed.emit(current_hp, max_hp)
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body is Enemy:
