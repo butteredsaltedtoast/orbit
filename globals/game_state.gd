@@ -1,5 +1,8 @@
 extends Node
 
+signal hp_changed(curr, max)
+signal wave_changed(wv)
+
 var player: Player = null
 var wave: int = 0
 

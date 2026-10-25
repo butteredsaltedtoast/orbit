@@ -1,10 +1,20 @@
 [gd_scene format=3 uid="uid://biriwn23m61yg"]
 
 [ext_resource type="PackedScene" uid="uid://cpr5t4paix2ua" path="res://player/player.tscn" id="1_2262g"]
+[ext_resource type="Texture2D" uid="uid://diityhnosxkyr" path="res://assets/art/tile.png" id="1_m1504"]
 [ext_resource type="Script" uid="uid://dskmiije68yf" path="res://levels/wave_manager.gd" id="2_wdj6m"]
 [ext_resource type="PackedScene" uid="uid://c0hm73mfrcvb6" path="res://enemies/enemy.tscn" id="3_l8qe7"]
+[ext_resource type="PackedScene" uid="uid://cjlkw0dmxnwto" path="res://ui/hud.tscn" id="5_ifaiv"]
 
 [node name="Main" type="Node2D" unique_id=440888473]
+
+[node name="Floor" type="Sprite2D" parent="." unique_id=1677947283]
+texture_repeat = 2
+position = Vector2(-2000, -2000)
+texture = ExtResource("1_m1504")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4000, 4000)
 
 [node name="Player" parent="." unique_id=1696184416 instance=ExtResource("1_2262g")]
 
@@ -14,3 +24,5 @@
 script = ExtResource("2_wdj6m")
 enemy_scene = ExtResource("3_l8qe7")
 enemies = NodePath("../Enemies")
+
+[node name="Hud" parent="." unique_id=730284070 instance=ExtResource("5_ifaiv")]

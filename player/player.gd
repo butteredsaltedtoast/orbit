@@ -34,9 +34,8 @@ func _physics_process(delta: float) -> void:
 func take_damage(damage: float) -> void:
 	if(!inv_timer.is_stopped()):
 		return
-	current_hp -= damage
 	if(current_hp <= 0):
-		current_hp = 0	
+		current_hp = 0
 		print("dead")
 	else:
 		print("hp: ", current_hp)
@@ -52,6 +51,8 @@ func take_damage(damage: float) -> void:
 		tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
 		tween.tween_interval(inv_timer.wait_time / 3)
 		tween.tween_property(sprite, "modulate", Color.WHITE, 0)
+		current_hp -= damage
+	GameState.hp_changed.emit(current_hp, max_hp)
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body is Enemy:

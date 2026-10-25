@@ -1,31 +1,33 @@
 [gd_scene format=3 uid="uid://c0hm73mfrcvb6"]
 
 [ext_resource type="Script" uid="uid://34ekybs6u2mx" path="res://enemies/enemy.gd" id="1_7frlh"]
-[ext_resource type="Texture2D" uid="uid://dr32pshn8sbkr" path="res://icon.svg" id="1_fw1ev"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_o33cc"]
+[ext_resource type="PackedScene" uid="uid://m62mvplk3k8c" path="res://enemies/death_burst.tscn" id="2_orwns"]
+[ext_resource type="Texture2D" uid="uid://ddtrwc4dsi086" path="res://assets/art/packet.png" id="3_orwns"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7frlh"]
-radius = 14.142136
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o33cc"]
+radius = 5.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1015853766]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_7frlh")
 fling_damage = 1.0
+burst = ExtResource("2_orwns")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1206697953]
 modulate = Color(1, 0, 0, 1)
-scale = Vector2(0.171875, 0.171875)
-texture = ExtResource("1_fw1ev")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1897952006]
-shape = SubResource("CircleShape2D_o33cc")
+texture = ExtResource("3_orwns")
 
 [node name="OrbitHitbox" type="Area2D" parent="." unique_id=1752438010]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OrbitHitbox" unique_id=1603092470]
 shape = SubResource("CircleShape2D_7frlh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1897952006]
+shape = SubResource("CircleShape2D_o33cc")
 
 [connection signal="body_entered" from="OrbitHitbox" to="." method="_on_orbit_hitbox_body_entered"]

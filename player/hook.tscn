@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dej0pg2s5at33"]
 
 [ext_resource type="Script" uid="uid://yu8bupy63op7" path="res://player/hook.gd" id="1_572xl"]
-[ext_resource type="Texture2D" uid="uid://dr32pshn8sbkr" path="res://icon.svg" id="1_qv24e"]
+[ext_resource type="Texture2D" uid="uid://1f74wi44grca" path="res://assets/art/cursor.png" id="2_572xl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o33cc"]
 radius = 4.0
@@ -17,8 +17,7 @@ width = 2.0
 default_color = Color(0.12941177, 1, 1, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1706868968]
-scale = Vector2(0.046875, 0.049107153)
-texture = ExtResource("1_qv24e")
+texture = ExtResource("2_572xl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=661951878]
 shape = SubResource("CircleShape2D_o33cc")

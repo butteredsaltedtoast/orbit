@@ -14,6 +14,7 @@ extends CharacterBody2D
 @export var orbit_damage: float = 1.0
 @export var orbit_kb: float = 200.0
 @export var orbit_hits: int = 3
+@export var burst: PackedScene
 
 enum State {CHASING, ORBITING, FLUNG}
 var state: State = State.CHASING
@@ -23,6 +24,7 @@ var kb: Vector2 = Vector2.ZERO
 var hurt_timer: float = 0.0
 var tween: Tween
 var orig: Color
+var dead: bool = false
 
 func _ready() -> void:
 	hp = max_hp
@@ -48,7 +50,7 @@ func _physics_process(delta: float) -> void:
 					coll.take_damage(fling_damage, velocity.normalized() * fling_kb)
 					GameState.hitstop(0.05)
 					GameState.add_shake(0.4)
-					queue_free()
+					die()
 					return
 			velocity = velocity.move_toward(Vector2.ZERO, fling_friction * delta)
 			if velocity.length() < speed:
@@ -73,11 +75,13 @@ func fling(direction: Vector2) -> void:
 	orbit_hitbox.set_deferred("monitoring", false)
 	
 func take_damage(amt: float, push: Vector2) -> bool:
-	if hurt_timer > 0:
+	if hurt_timer > 0 or dead:
 		return false
 	hp -= amt
 	kb = push
 	hurt_timer = 0.15
+	if tween and tween.is_valid():
+		tween.kill()
 	tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
 	tween.tween_interval(hurt_timer / 3)
@@ -87,7 +91,7 @@ func take_damage(amt: float, push: Vector2) -> bool:
 	tween.tween_interval(hurt_timer / 3)
 	tween.tween_property(sprite, "modulate", orig, 0)
 	if hp <= 0:
-		queue_free()
+		die()
 	return true
 
 func _on_orbit_hitbox_body_entered(body: Node2D) -> void:
@@ -100,4 +104,15 @@ func _on_orbit_hitbox_body_entered(body: Node2D) -> void:
 	GameState.add_shake(0.15)
 	hits_left -= 1
 	if hits_left <= 0:
-		queue_free()
+		die()
+
+func die() -> void:
+	if dead:
+		return
+	dead = true
+	var b: CPUParticles2D = burst.instantiate()
+	b.position = global_position
+	self.get_parent().add_child(b)
+	b.global_position = global_position
+	b.emitting = true
+	queue_free()

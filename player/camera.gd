@@ -1,7 +1,7 @@
 class_name CustomCam
 extends Camera2D
 
-@export var max_offset: float = 4.0
+@export var max_offset: float = 3.0
 @export var decay: float = 1.5
 
 var trauma: float = 0.0

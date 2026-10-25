@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var max_slots: int = 3
-@export var orbit_radius: float = 50.0
+@export var orbit_radius: float = 36.0
 @export var spin_speed: float = 4.0
 @export var follow_speed: float = 15.0
 @export var hook_scene: PackedScene

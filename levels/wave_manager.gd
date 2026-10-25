@@ -1,3 +1,4 @@
+class_name WaveManager
 extends Node
 
 @export var enemy_scene: PackedScene
@@ -33,6 +34,7 @@ func _physics_process(delta: float) -> void:
 	
 func start_wave() -> void:
 	GameState.wave += 1
+	GameState.wave_changed.emit(GameState.wave)
 	in_wave = true
 	wave_time_left = wave_dur
 	spawn_cooldown = 0
