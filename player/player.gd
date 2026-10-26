@@ -38,7 +38,6 @@ func take_damage(damage: float) -> void:
 	current_hp = max(current_hp - damage, 0)
 	GameState.hp_changed.emit(current_hp, max_hp)
 	if(current_hp <= 0):
-		print("dead")
 		dead = true
 		set_physics_process(false)
 		if tween and tween.is_valid():
@@ -48,7 +47,6 @@ func take_damage(damage: float) -> void:
 		GameState.run_ended.emit()
 		return
 	else:
-		print("hp: ", current_hp)
 		inv_timer.start()
 		if tween and tween.is_valid():
 			tween.kill()

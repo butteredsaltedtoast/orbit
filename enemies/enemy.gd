@@ -45,7 +45,6 @@ func _physics_process(delta: float) -> void:
 				direction = global_position.direction_to(GameState.player.global_position)
 			velocity = direction * speed + kb
 		State.ORBITING:
-			#print("spin-ning, spin-ning♪♫")
 			pass
 		State.FLUNG:
 			qsprite.modulate.a = clampf((velocity.length() - speed) / (fling_speed - speed), 0, 1.0)

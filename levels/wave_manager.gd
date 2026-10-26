@@ -49,12 +49,11 @@ func start_wave() -> void:
 func end_wave() -> void:
 	in_wave = false
 	break_time_left = break_dur
-	print("wave CLEAR")
 	
 func spawn_enemy() -> void:
 	if not is_instance_valid(GameState.player):
 		return
-	if GameState.wave >= 2:
+	if GameState.wave >= 3:
 		if randf() < ddos_chance:
 			var spawn_dir: Vector2 = Vector2.from_angle(randf_range(0, TAU))
 			for i in range(clump_size):
