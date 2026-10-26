@@ -48,11 +48,11 @@ func take_damage(damage: float) -> void:
 			tween.kill()
 			sprite.modulate = Color.WHITE
 		tween = create_tween()
-		tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
+		tween.tween_property(sprite, "modulate", Color(2, 2, 2), 0)
 		tween.tween_interval(inv_timer.wait_time / 3)
 		tween.tween_property(sprite, "modulate", Color.WHITE, 0)
 		tween.tween_interval(inv_timer.wait_time / 3)
-		tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
+		tween.tween_property(sprite, "modulate", Color(2, 2, 2), 0)
 		tween.tween_interval(inv_timer.wait_time / 3)
 		tween.tween_property(sprite, "modulate", Color.WHITE, 0)
 

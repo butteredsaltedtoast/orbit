@@ -1,7 +1,9 @@
 class_name Enemy
 extends CharacterBody2D
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var visual: Node2D = $Visual
+@onready var sprite: Sprite2D = $Visual/Sprite2D
+@onready var qsprite: Sprite2D = $Visual/QuarantineSprite
 @onready var orbit_hitbox: Area2D = $OrbitHitbox
 
 @export var speed: float = 80.0
@@ -23,13 +25,12 @@ var hits_left: int
 var kb: Vector2 = Vector2.ZERO
 var hurt_timer: float = 0.0
 var tween: Tween
-var orig: Color
+var qtween: Tween
 var dead: bool = false
 
 func _ready() -> void:
 	hp = max_hp
 	hits_left = orbit_hits
-	orig = sprite.modulate
 
 func _physics_process(delta: float) -> void:
 	hurt_timer = move_toward(hurt_timer, 0, delta)
@@ -44,6 +45,7 @@ func _physics_process(delta: float) -> void:
 			#print("spin-ning, spin-ning♪♫")
 			pass
 		State.FLUNG:
+			qsprite.modulate.a = clampf((velocity.length() - speed) / (fling_speed - speed), 0, 1.0)
 			for i in range(get_slide_collision_count()):
 				var coll: Object = get_slide_collision(i).get_collider()
 				if coll is Enemy:
@@ -58,6 +60,7 @@ func _physics_process(delta: float) -> void:
 				set_collision_layer_value(3, false)
 				set_collision_layer_value(2, true)
 				set_collision_mask_value(2, true)
+				qsprite.modulate.a = 0
 	move_and_slide()
 	
 func capture() -> void:
@@ -65,9 +68,15 @@ func capture() -> void:
 	set_collision_layer_value(2, false)
 	set_collision_mask_value(2, false)
 	velocity = Vector2.ZERO
+	if qtween and qtween.is_valid():
+		qtween.kill()
+	qtween = create_tween()
+	qtween.tween_property(qsprite, "modulate:a", 1.0, 0.1)
 	orbit_hitbox.set_deferred("monitoring", true)
 
 func fling(direction: Vector2) -> void:
+	if qtween and qtween.is_valid():
+		qtween.kill()
 	state = State.FLUNG
 	velocity = direction * fling_speed
 	set_collision_layer_value(3, true)
@@ -82,14 +91,15 @@ func take_damage(amt: float, push: Vector2) -> bool:
 	hurt_timer = 0.15
 	if tween and tween.is_valid():
 		tween.kill()
+		visual.material.set_shader_parameter("flash_amount", 0.0)
 	tween = create_tween()
-	tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
+	tween.tween_property(visual, "material:shader_parameter/flash_amount", 1.0, 0)
 	tween.tween_interval(hurt_timer / 3)
-	tween.tween_property(sprite, "modulate", orig, 0)
+	tween.tween_property(visual, "material:shader_parameter/flash_amount", 0.0, 0)
 	tween.tween_interval(hurt_timer / 3)
-	tween.tween_property(sprite, "modulate", Color(10, 10, 10), 0)
+	tween.tween_property(visual, "material:shader_parameter/flash_amount", 1.0, 0)
 	tween.tween_interval(hurt_timer / 3)
-	tween.tween_property(sprite, "modulate", orig, 0)
+	tween.tween_property(visual, "material:shader_parameter/flash_amount", 0.0, 0)
 	if hp <= 0:
 		die()
 	return true

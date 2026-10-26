@@ -2,7 +2,14 @@
 
 [ext_resource type="Script" uid="uid://34ekybs6u2mx" path="res://enemies/enemy.gd" id="1_7frlh"]
 [ext_resource type="PackedScene" uid="uid://m62mvplk3k8c" path="res://enemies/death_burst.tscn" id="2_orwns"]
+[ext_resource type="Shader" uid="uid://jpfbm2r04mxt" path="res://shaders/flash.gdshader" id="3_07tka"]
 [ext_resource type="Texture2D" uid="uid://ddtrwc4dsi086" path="res://assets/art/packet.png" id="3_orwns"]
+[ext_resource type="Texture2D" uid="uid://bd1ywkvt7rvlh" path="res://assets/art/packet_capture.png" id="4_a6vjd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_07tka"]
+resource_local_to_scene = true
+shader = ExtResource("3_07tka")
+shader_parameter/flash_amount = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7frlh"]
 radius = 7.0
@@ -17,9 +24,18 @@ script = ExtResource("1_7frlh")
 fling_damage = 1.0
 burst = ExtResource("2_orwns")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1206697953]
+[node name="Visual" type="Node2D" parent="." unique_id=1223534478]
+material = SubResource("ShaderMaterial_07tka")
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual" unique_id=1206697953]
 modulate = Color(1, 0, 0, 1)
+use_parent_material = true
 texture = ExtResource("3_orwns")
+
+[node name="QuarantineSprite" type="Sprite2D" parent="Visual" unique_id=1789813264]
+modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+texture = ExtResource("4_a6vjd")
 
 [node name="OrbitHitbox" type="Area2D" parent="." unique_id=1752438010]
 collision_mask = 2

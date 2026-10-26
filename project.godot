@@ -86,4 +86,5 @@ common/physics_interpolation=true
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+viewport/hdr_2d=true
 environment/defaults/default_clear_color=Color(0.043137256, 0.05882353, 0.101960786, 1)

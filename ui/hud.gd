@@ -6,7 +6,12 @@ extends CanvasLayer
 
 @export var wave_manager: WaveManager
 
+var fillstyle: StyleBoxFlat
+var pulsetween: Tween
+
 func _ready() -> void:
+	fillstyle = hpbar.get_theme_stylebox("fill").duplicate()
+	hpbar.add_theme_stylebox_override("fill", fillstyle)
 	GameState.hp_changed.connect(update_hp)
 	GameState.wave_changed.connect(update_wave)
 	update_wave(GameState.wave)
@@ -21,6 +26,17 @@ func _process(_delta: float) -> void:
 func update_hp(curr: float, mx: float) -> void:
 	hpbar.max_value = mx
 	hpbar.value = curr
+	if curr / mx <= 0.3:
+		fillstyle.bg_color = Color("#ff3b5c")
+		if not pulsetween or not pulsetween.is_valid():
+			pulsetween = create_tween()
+			pulsetween.set_loops()
+			pulsetween.tween_property(fillstyle, "bg_color", Color("#7a1a2c"), 0.3)
+			pulsetween.tween_property(fillstyle, "bg_color", Color("#ff3b5c"), 0.3)
+	else:
+		if pulsetween and pulsetween.is_valid():
+			pulsetween.kill()
+		fillstyle.bg_color = Color("#3ee6ff")
 
 func update_wave(wave: int) -> void:
 	wvlabel.text = "wave: " + str(wave)
