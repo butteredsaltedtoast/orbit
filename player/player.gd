@@ -44,7 +44,7 @@ func take_damage(damage: float) -> void:
 		if tween and tween.is_valid():
 			tween.kill()
 		tween = create_tween()
-		tween.tween_property(sprite, "modulate", Color(0.35, 0.35, 0.35), 0.3)
+		tween.tween_property(sprite, "modulate", Color(3.0, 0.3, 0.3), 0.3)
 		GameState.run_ended.emit()
 		return
 	else:

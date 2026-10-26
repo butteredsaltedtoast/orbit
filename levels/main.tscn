@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://diityhnosxkyr" path="res://assets/art/tile.png" id="1_m1504"]
 [ext_resource type="Script" uid="uid://dskmiije68yf" path="res://levels/wave_manager.gd" id="2_wdj6m"]
 [ext_resource type="PackedScene" uid="uid://c0hm73mfrcvb6" path="res://enemies/enemy.tscn" id="3_l8qe7"]
+[ext_resource type="PackedScene" uid="uid://cnfm0j1qcg3n1" path="res://enemies/ddos.tscn" id="5_5k4jt"]
 [ext_resource type="PackedScene" uid="uid://cjlkw0dmxnwto" path="res://ui/hud.tscn" id="5_ifaiv"]
 
 [sub_resource type="Environment" id="Environment_o33cc"]
@@ -28,6 +29,7 @@ region_rect = Rect2(0, 0, 4000, 4000)
 [node name="WaveManager" type="Node" parent="." unique_id=172018946 node_paths=PackedStringArray("enemies")]
 script = ExtResource("2_wdj6m")
 enemy_scene = ExtResource("3_l8qe7")
+ddos_scene = ExtResource("5_5k4jt")
 enemies = NodePath("../Enemies")
 
 [node name="Hud" parent="." unique_id=730284070 node_paths=PackedStringArray("wave_manager") instance=ExtResource("5_ifaiv")]

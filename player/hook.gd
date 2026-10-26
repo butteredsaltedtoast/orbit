@@ -16,7 +16,7 @@ var state: State
 var direction: Vector2
 var distance_travelled: float
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not is_instance_valid(GameState.player):
 		return
 	var v: Vector2 = tether.to_local(GameState.player.global_position)

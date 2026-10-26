@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://6ntl3c5q12gl"]
+
+[ext_resource type="Script" uid="uid://dkqt63wsjdkkt" path="res://enemies/death_burst.gd" id="1_2kmck"]
+
+[sub_resource type="Gradient" id="Gradient_0nkw3"]
+offsets = PackedFloat32Array(0, 0.5308642, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.5411765, 0.23921569, 1, 1, 0.5411765, 0.23921569, 0)
+
+[node name="DeathBurst" type="CPUParticles2D" unique_id=1709213183]
+emitting = false
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 120.0
+damping_min = 200.0
+damping_max = 200.0
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_0nkw3")
+script = ExtResource("1_2kmck")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

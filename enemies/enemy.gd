@@ -15,13 +15,14 @@ extends CharacterBody2D
 @export var kb_decay: float = 600.0
 @export var orbit_damage: float = 1.0
 @export var orbit_kb: float = 200.0
-@export var orbit_hits: int = 3
+@export var orbit_hits: float = 3
 @export var burst: PackedScene
+@export var grind_cost: float = 1.0
 
 enum State {CHASING, ORBITING, FLUNG, LEAVING}
 var state: State = State.CHASING
 var hp: float
-var hits_left: int
+var hits_left: float
 var kb: Vector2 = Vector2.ZERO
 var hurt_timer: float = 0.0
 var tween: Tween
@@ -118,8 +119,9 @@ func _on_orbit_hitbox_body_entered(body: Node2D) -> void:
 	var hit: bool = body.take_damage(orbit_damage, push)
 	if not hit:
 		return
+	var e: Enemy = body as Enemy
 	GameState.add_shake(0.15)
-	hits_left -= 1
+	hits_left -= e.grind_cost
 	if hits_left <= 0:
 		die()
 

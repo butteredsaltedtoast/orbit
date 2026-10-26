@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cnfm0j1qcg3n1"]
+
+[ext_resource type="Script" uid="uid://34ekybs6u2mx" path="res://enemies/enemy.gd" id="1_0nkw3"]
+[ext_resource type="PackedScene" uid="uid://6ntl3c5q12gl" path="res://enemies/ddos_burst.tscn" id="2_0nkw3"]
+[ext_resource type="Shader" uid="uid://jpfbm2r04mxt" path="res://shaders/flash.gdshader" id="3_t3pna"]
+[ext_resource type="Texture2D" uid="uid://bw2xk0rpeu0il" path="res://assets/art/ddos.png" id="4_0nkw3"]
+[ext_resource type="Texture2D" uid="uid://ca0vewntdfg7u" path="res://assets/art/ddos_capture.png" id="5_6f8hw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_07tka"]
+resource_local_to_scene = true
+shader = ExtResource("3_t3pna")
+shader_parameter/flash_amount = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7frlh"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o33cc"]
+radius = 3.0
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1015853766]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_0nkw3")
+speed = 130.0
+max_hp = 1.0
+fling_damage = 1.0
+burst = ExtResource("2_0nkw3")
+grind_cost = 0.0
+
+[node name="Visual" type="Node2D" parent="." unique_id=1223534478]
+material = SubResource("ShaderMaterial_07tka")
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual" unique_id=1206697953]
+modulate = Color(1, 0, 0, 1)
+use_parent_material = true
+texture = ExtResource("4_0nkw3")
+
+[node name="QuarantineSprite" type="Sprite2D" parent="Visual" unique_id=1789813264]
+modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+texture = ExtResource("5_6f8hw")
+
+[node name="OrbitHitbox" type="Area2D" parent="." unique_id=1752438010]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OrbitHitbox" unique_id=1603092470]
+shape = SubResource("CircleShape2D_7frlh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1897952006]
+shape = SubResource("CircleShape2D_o33cc")
+
+[connection signal="body_entered" from="OrbitHitbox" to="." method="_on_orbit_hitbox_body_entered"]
