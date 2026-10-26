@@ -18,7 +18,7 @@ extends CharacterBody2D
 @export var orbit_hits: int = 3
 @export var burst: PackedScene
 
-enum State {CHASING, ORBITING, FLUNG}
+enum State {CHASING, ORBITING, FLUNG, LEAVING}
 var state: State = State.CHASING
 var hp: float
 var hits_left: int
@@ -26,11 +26,13 @@ var kb: Vector2 = Vector2.ZERO
 var hurt_timer: float = 0.0
 var tween: Tween
 var qtween: Tween
+var ltween: Tween
 var dead: bool = false
 
 func _ready() -> void:
 	hp = max_hp
 	hits_left = orbit_hits
+	GameState.run_ended.connect(leave)
 
 func _physics_process(delta: float) -> void:
 	hurt_timer = move_toward(hurt_timer, 0, delta)
@@ -61,9 +63,14 @@ func _physics_process(delta: float) -> void:
 				set_collision_layer_value(2, true)
 				set_collision_mask_value(2, true)
 				qsprite.modulate.a = 0
+		State.LEAVING:
+			if is_instance_valid(GameState.player):
+				velocity = speed * 1.5 * GameState.player.global_position.direction_to(global_position)
 	move_and_slide()
 	
 func capture() -> void:
+	if state == State.LEAVING or dead:
+		return
 	state = State.ORBITING
 	set_collision_layer_value(2, false)
 	set_collision_mask_value(2, false)
@@ -126,3 +133,16 @@ func die() -> void:
 	b.global_position = global_position
 	b.emitting = true
 	queue_free()
+
+func leave() -> void:
+	if dead:
+		return
+	state = State.LEAVING
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
+	orbit_hitbox.set_deferred("monitoring", false)
+	if ltween and ltween.is_valid():
+		ltween.kill()
+	ltween = create_tween()
+	ltween.tween_property(visual, "modulate:a", 0.0, 1.5)
+	ltween.tween_callback(queue_free)

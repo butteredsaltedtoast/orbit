@@ -13,6 +13,14 @@ var base_angle: float = 0.0
 var hook_out: bool = false
 var hook_timer: float = 0.0
 var fling_timer: float = 0.0
+var dead: bool = false
+
+func _ready() -> void:
+	GameState.run_ended.connect(func():
+		captured.clear()
+		set_physics_process(false)
+		dead = true
+	)
 
 func _physics_process(delta: float) -> void:
 	var aim_dir: Vector2 = global_position.direction_to(get_global_mouse_position())
@@ -47,6 +55,8 @@ func _physics_process(delta: float) -> void:
 		captured[i].global_position = captured[i].global_position.lerp(target, w)
 
 func on_hook_latched(enemy: Enemy) -> void:
+	if dead:
+		return
 	hook_out = false
 	hook_timer = hook_cooldown
 	if captured.size() >= max_slots:

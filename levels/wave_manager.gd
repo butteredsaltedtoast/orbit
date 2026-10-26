@@ -14,11 +14,15 @@ var in_wave: bool = false
 var wave_time_left: float
 var spawn_cooldown: float
 var break_time_left: float
+var in_run: bool = true
 
 func _ready() -> void:
 	start_wave()
+	GameState.run_ended.connect(func(): in_run = false)
 
 func _physics_process(delta: float) -> void:
+	if not in_run:
+		return
 	if in_wave:
 		wave_time_left -= delta
 		spawn_cooldown -= delta

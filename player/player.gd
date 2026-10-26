@@ -40,6 +40,12 @@ func take_damage(damage: float) -> void:
 	if(current_hp <= 0):
 		print("dead")
 		dead = true
+		set_physics_process(false)
+		if tween and tween.is_valid():
+			tween.kill()
+		tween = create_tween()
+		tween.tween_property(sprite, "modulate", Color(0.35, 0.35, 0.35), 0.3)
+		GameState.run_ended.emit()
 		return
 	else:
 		print("hp: ", current_hp)
